@@ -40,9 +40,9 @@ class AboutTuples(Koan):
         self.assertEqual((1, 2, 5, 'boom'), count_of_three)
 
     def test_tuples_of_one_look_peculiar(self):
-        self.assertEqual(__, (1).__class__)
-        self.assertEqual(__, (1,).__class__)
-        self.assertEqual(__, ("Hello comma!", ))
+        self.assertEqual(int, (1).__class__)
+        self.assertEqual(tuple, (1,).__class__)
+        self.assertEqual(("Hello comma!", ), ("Hello comma!", ))
 
     def test_tuple_constructor_can_be_surprising(self):
         self.assertEqual(__, tuple("Surprise!"))
