@@ -49,14 +49,14 @@ class AboutTuples(Koan):
                          tuple("Surprise!"))
 
     def test_creating_empty_tuples(self):
-        self.assertEqual(__, ())
-        self.assertEqual(__, tuple())  # Sometimes less confusing
+        self.assertEqual((), ())
+        self.assertEqual(tuple(), tuple())  # Sometimes less confusing
 
     def test_tuples_can_be_embedded(self):
         lat = (37, 14, 6, 'N')
         lon = (115, 48, 40, 'W')
         place = ('Area 51', lat, lon)
-        self.assertEqual(__, place)
+        self.assertEqual(('Area 51', lat, lon), place)
 
     def test_tuples_are_good_for_representing_records(self):
         locations = [
@@ -68,5 +68,5 @@ class AboutTuples(Koan):
             ("Cthulhu", (26, 40, 1, 'N'), (70, 45, 7, 'W'))
         )
 
-        self.assertEqual(__, locations[2][0])
-        self.assertEqual(__, locations[0][1][2])
+        self.assertEqual('Cthulhu', locations[2][0])
+        self.assertEqual(15.56, locations[0][1][2])
