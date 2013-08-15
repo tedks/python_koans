@@ -18,9 +18,8 @@
 #   about_triangle_project_2.py
 #
 def triangle(a, b, c):
-    # DELETE 'PASS' AND WRITE THIS CODE
-    pass
-
+    retvals = ['equilateral', 'isosceles', 'scalene']
+    return retvals[(len(set([a,b,c])) - 1)]
 
 # Error class used in part 2.  No need to change this code.
 class TriangleError(StandardError):
