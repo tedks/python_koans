@@ -18,6 +18,10 @@
 #   about_triangle_project_2.py
 #
 def triangle(a, b, c):
+    args = [a,b,c]
+    args.sort()
+    if (not ((args[0] + args[1]) > args[2])):
+        raise TriangleError
     retvals = ['equilateral', 'isosceles', 'scalene']
     return retvals[(len(set([a,b,c])) - 1)]
 
