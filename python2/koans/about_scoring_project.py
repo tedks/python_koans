@@ -34,9 +34,39 @@ from runner.koan import *
 # Your goal is to write the score method.
 
 def score(dice):
-    # You need to write this method
-    pass
-
+    def find_streak(l):
+        if len(l) == 0: return None
+        start = end = 0
+        prev = l[0]
+        for i in range(0,len(l)):
+            end += 1
+            if prev == l[i]:
+                if (end - start) == 3:
+                    return (start, end)
+            else:
+                start = end
+            prev = l[i]
+        return None
+    score = 0
+    dice.sort()
+    strk = find_streak(dice)
+    while strk != None:
+        (s,f) = strk
+        print "Found streak " + str(strk)
+        if dice[s:f] == [1,1,1]:
+            score += 1000
+        else:
+            score += 100 * dice[s]
+        del dice[s:f]
+        strk = find_streak(dice)
+    for n in dice:
+        if n == 1:
+            score += 100
+        elif n == 5:
+            score += 50
+    return score
+    
+        
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
