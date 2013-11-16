@@ -85,8 +85,8 @@ class AboutAttributeAccess(Koan):
     def test_foo_attributes_are_caught(self):
         catcher = self.WellBehavedFooCatcher()
 
-        self.assertEqual(__, catcher.foo_bar)
-        self.assertEqual(__, catcher.foo_baz)
+        self.assertEqual('Foo to you too', catcher.foo_bar)
+        self.assertEqual('Foo to you too', catcher.foo_baz)
 
     def test_non_foo_messages_are_treated_normally(self):
         catcher = self.WellBehavedFooCatcher()
@@ -94,7 +94,7 @@ class AboutAttributeAccess(Koan):
         try:
             catcher.normal_undefined_attribute
         except AttributeError as ex:
-            self.assertMatch(__, ex[0])
+            self.assertMatch('has no attribute', ex[0])
 
     # ------------------------------------------------------------------
 
@@ -133,7 +133,7 @@ class AboutAttributeAccess(Koan):
         catcher = self.RecursiveCatcher()
         catcher.my_method()
         global stack_depth
-        self.assertEqual(__, stack_depth)
+        self.assertEqual(11, stack_depth)
 
     # ------------------------------------------------------------------
 
@@ -155,17 +155,17 @@ class AboutAttributeAccess(Koan):
         catcher = self.MinimalCatcher()
         catcher.my_method()
 
-        self.assertEqual(__, catcher.no_of_getattr_calls)
+        self.assertEqual(0, catcher.no_of_getattr_calls)
 
     def test_getattr_only_catches_unknown_attributes(self):
         catcher = self.MinimalCatcher()
         catcher.purple_flamingos()
         catcher.free_pie()
 
-        self.assertEqual(__,
+        self.assertEqual(self.MinimalCatcher.DuffObject,
             catcher.give_me_duff_or_give_me_death().__class__)
 
-        self.assertEqual(__, catcher.no_of_getattr_calls)
+        self.assertEqual(3, catcher.no_of_getattr_calls)
 
     # ------------------------------------------------------------------
 
