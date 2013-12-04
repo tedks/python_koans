@@ -22,14 +22,52 @@ from runner.koan import *
 class Proxy(object):
     def __init__(self, target_object):
         # WRITE CODE HERE
-
+        self._blacklist = ['_accesses', '_obj', 
+                           'messages', '_messages',
+                           'number_of_times_called',
+                           'was_called']
+        self._messages = []
+        self._accesses = {}
         #initialize '_obj' attribute last. Trust me on this!
         self._obj = target_object
 
     # WRITE CODE HERE
 
+    def __getattribute__(self, attr):
+        if not (attr == '_blacklist' or attr in self._blacklist):
+            if not attr in self._accesses:
+                self._accesses[attr] = 0
+            self._accesses[attr] += 1
+            self._messages.append(attr)
+            return getattr(self._obj, attr)
+        else:
+            return super(Proxy, self).__getattribute__(attr)
+            
 
-# The proxy object should pass the following Koan:
+    def __setattr__(self, attr, v):
+        if not (attr == '_blacklist' or attr in self._blacklist):
+            if not attr in self._accesses:
+                self._accesses[attr] = 0
+            self._accesses[attr] += 1
+            self._messages.append(attr)
+            return setattr(self._obj, attr, v)
+        else:
+            return super(Proxy, self).__setattr__(attr, v)
+        
+
+    def messages(self):
+        return self._messages
+        
+    def number_of_times_called(self, attr):
+        try:
+            return self._accesses[attr]
+        except KeyError:
+            return 0
+
+    def was_called(self, attr):
+        return attr in self._messages
+
+        # The proxy object should pass the following Koan:
 #
 class AboutProxyObjectProject(Koan):
     def test_proxy_method_returns_wrapped_object(self):
